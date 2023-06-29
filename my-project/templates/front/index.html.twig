@@ -1,0 +1,214 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Frontend{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <style>
+        .container {
+            max-width: 1170px;
+            margin-top: 80px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 30px;
+            padding-right: 30px;
+        }
+
+        .box {
+            height: 200px;
+            border: 2px solid black;
+            border-radius: 8px;
+            background: rgb(238,174,202);
+            background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);            width: calc(33.33% - 20px);
+            margin: 10px;
+            padding: 20px;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .large-box {
+            height: 500px;
+            border: 2px solid black;
+            border-radius: 8px;
+            background: rgb(28,174,202);
+            background: radial-gradient(circle, rgba(28,174,202,1) 0%, rgba(148,187,233,1) 100%);            width: calc(33.33% - 20px);
+            margin: 10px;
+            padding: 20px;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .swiper-container {
+            width: 100%;
+            max-width: 600px;
+            height: 400px;
+            margin: 20px auto;
+        }
+
+        .swiper-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .swiper-slide {
+            text-align: center;
+            font-size: 18px;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .swiper-slide .book-image {
+            box-shadow: 0 -2px 0 0 black;
+            width: 385px;
+            height: 325px;
+            margin-bottom: 10px;
+        }
+
+        .slider-container {
+            position: relative;
+            overflow: hidden; 
+        }
+
+        .swiper-button-next,
+        .swiper-button-prev {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10; 
+        }
+
+        .swiper-button-next {
+            right: 0; 
+        }
+
+        .swiper-button-prev {
+            left: 0; 
+        }
+
+        .book-image {
+            width: 385px;
+            height: 325px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Witamy w naszej bibliotece</h1>
+        <p>Poniżej znajdują się autorzy i ich kolekcje książek.</p>
+
+
+        <div class="row">
+            <div class="col-md-3">
+                <div class="box">
+                    <h3>Autor 1</h3>
+                    <p>Nazwa: Autor 1</p>
+                    <p>Kraj: U.S.A.</p>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="box">
+                    <h3>Autor 2</h3>
+                    <p>Nazwa: Autor 2</p>
+                    <p>Kraj: Polska</p>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="box">
+                    <h3>Autor 3</h3>
+                    <p>Nazwa: Autor 2</p>
+                    <p>Kraj: Niemcy</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="box">
+                    <h3>Autor 4</h3>
+                    <p>Nazwa: Autor 4</p>
+                    <p>Kraj: U.S.A.</p>
+                </div>
+            </div>
+
+            <div class="col-md-5">
+                <div class="box">
+                    <h3>Autor 5</h3>
+                    <p>Nazwa: Autor 5</p>
+                    <p>Kraj: Polska</p>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="box">
+                    <h3>Autor 6</h3>
+                    <p>Nazwa: Autor 6</p>
+                    <p>Kraj: Niemcy</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="large-box">
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="large-box">
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="row">
+            <div class="slider-container">
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    {% for book in books %}
+                        <div class="swiper-slide book-details text-center d-flex flex-column align-items-start">
+                            <img src="{{ book.image }}" alt="{{ book.name }}" class="book-image">
+                            <h3>{{ book.name }}</h3>
+                            <p>{{ book.author }}</p>
+                            <p>{{ book.publisher }}</p>
+                            <p>{{ book.pageCount }} pages</p>
+                            <button type="button" class="btn btn-secondary">Czytaj</button>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="swiper-pagination"></div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block javascripts %}
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var swiper = new Swiper('.swiper-container', {
+                slidesPerView: 1,
+                loop: true,
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+            });
+        });
+    </script>
+{% endblock %}
